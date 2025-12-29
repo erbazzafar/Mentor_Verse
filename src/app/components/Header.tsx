@@ -23,6 +23,11 @@ export default function Header() {
       link: "/mentors",
       icon: <IconWorldQuestion className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
+    {
+      name: "FAQ",
+      link: "/mentors",
+      icon: <IconWorldQuestion className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
   ];
 
   if (status === "authenticated" && session?.user) {

@@ -37,7 +37,7 @@ const MentorProfile = () => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleMentorship = () => {
+  const handleMentorship = async () => {
     if (!session?.user) {
       toast({
         title: "Authentication Required",
@@ -56,9 +56,44 @@ const MentorProfile = () => {
       return;
     }
 
-    // Encode mentor object & navigate to payment
-    const mentorData = encodeURIComponent(JSON.stringify(mentor));
-    router.push(`/payment?mentor=${mentorData}`);
+    try {
+      const { data } = await axios.get(`/api/connections/check`, {
+        params: {
+          studentId: session.user._id,
+          mentorId: mentor?.user_id._id,
+        },
+      });
+
+      if (!data.success) {
+        toast({
+          title: "Error",
+          description:
+            "Failed to check existing connections. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (data.exists) {
+        toast({
+          title: "Mentorship Already Exists",
+          description:
+            "You already have a mentorship connection with this mentor.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const mentorData = encodeURIComponent(JSON.stringify(mentor));
+      router.push(`/payment?mentor=${mentorData}`);
+    } catch (error) {
+      console.error("❌ Error checking mentorship connection:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   useEffect(() => {
