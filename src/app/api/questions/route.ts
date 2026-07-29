@@ -4,6 +4,7 @@ import Question from "@/models/question.model";
 import Answer from "@/models/answer.model";
 import Vote from "@/models/vote.model";
 import { NextApiRequest, NextApiResponse } from "next";
+import { createAiAnswerForQuestion } from "@/utils/aiAnswerService";
 
 // Helper function for error response
 function createErrorResponse(message: string, status = 400) {
@@ -29,6 +30,8 @@ export async function POST(request: NextRequest) {
       attachmentId: attachment || "",
     });
     console.log("newQuestion",newQuestion);
+
+    await createAiAnswerForQuestion(newQuestion._id.toString(), title, content);
 
     return NextResponse.json({ success: true, message: "Question added successfully", data: newQuestion }, { status: 201 });
   } catch (error) {

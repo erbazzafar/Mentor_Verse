@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
 
     const answers = await Answer.find({ questionId })
       .limit(limit)
-      .sort({ createdAt: -1 })
+      .sort({ isAiGenerated: -1, createdAt: -1 })
       .populate("authorId", "username profileImg reputation") // Fetch username and reputation from User model
       .lean();
 

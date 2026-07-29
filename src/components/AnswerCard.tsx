@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Comments from "./Comments";
 import VoteButtons from "./VoteButtons";
-import { IconTrash, IconCheck } from "@tabler/icons-react";
+import { IconTrash, IconCheck, IconRobot } from "@tabler/icons-react";
 import { MarkdownPreview } from "./RTE";
 import slugify from "@/utils/slugify";
 import Link from "next/link";
@@ -78,6 +78,12 @@ const Answer = ({
 
       {/* Answer Content */}
       <div className="w-full overflow-auto">
+        {answer.isAiGenerated && (
+          <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-2 py-0.5 text-xs font-medium text-blue-500">
+            <IconRobot className="h-3 w-3" />
+            AI-generated answer
+          </span>
+        )}
         <div className="rounded-xl p-4">
           <MarkdownPreview source={answer.content} />
         </div>

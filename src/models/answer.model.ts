@@ -6,6 +6,7 @@ export interface IAnswer extends Document {
   questionId: mongoose.Types.ObjectId;
   createdAt: Date;
   isAccepted: boolean;
+  isAiGenerated: boolean;
 }
 
 const AnswerSchema: Schema = new Schema<IAnswer>(
@@ -26,6 +27,7 @@ const AnswerSchema: Schema = new Schema<IAnswer>(
       ref: "Question",
     },
     isAccepted: { type: Boolean, default: false },
+    isAiGenerated: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
