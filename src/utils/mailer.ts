@@ -24,6 +24,8 @@ export async function sendEmail({
     let subject: string;
     let template: JSX.Element;
 
+    console.log("Sending email with options:", { email, username, otp, type });
+
     if (type === "verification") {
       subject = "MentorVerse Verification Code";
       template = VerificationEmail({ username, otp });

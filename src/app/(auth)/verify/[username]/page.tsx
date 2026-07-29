@@ -42,10 +42,12 @@ export default function VerifyAccount() {
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     try {
       const response = await axios.post("/api/users/verify", {
-        username: params.username,
+        username: decodeURIComponent(params.username),
         code: data.code,
         action: "verify",
       });
+
+      console.log("Verification response:", response.data);
 
       if (response.data.success) {
         // Show success toast message
@@ -73,7 +75,7 @@ export default function VerifyAccount() {
     setIsResending(true);
     try {
       await axios.post("/api/users/verify", {
-        username: params.username,
+        username: decodeURIComponent(params.username),
         action: "resend",
       });
       setTimeRemaining(60); // Set a cooldown timer of 60 seconds

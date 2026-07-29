@@ -109,7 +109,7 @@ export default function SignUpForm() {
     try {
       const response = await axios.post(`/api/users/signup-${role}`, data);
       console.log("Sign-up response:", response.data);
-      router.replace(`/verify/${data.username}`);
+      router.replace(`/verify/${encodeURIComponent(data.username)}`);
     } catch (error) {
       console.error("Error during sign-up:", error);
       const axiosError = error as AxiosError<{ message: string }>;

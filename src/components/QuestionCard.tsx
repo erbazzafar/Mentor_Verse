@@ -4,7 +4,7 @@ import Link from "next/link";
 import slugify from "@/utils/slugify";
 import convertDateToRelativeTime from "@/utils/relativeTime";
 
-const QuestionCard = ({ ques, key }: { ques: any; key?: string }) => {
+const QuestionCard = ({ ques }: { ques: any }) => {
   const [height, setHeight] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -17,7 +17,6 @@ const QuestionCard = ({ ques, key }: { ques: any; key?: string }) => {
   return (
     <div
       ref={ref}
-      key={key || ques._id?.toString()} // Optional key here
       className="relative flex flex-col gap-4 overflow-hidden rounded-xl border bg-white p-4 shadow-md duration-200 hover:shadow-lg sm:flex-row 
             border-gray-200 dark:border-white/20 dark:bg-gray-900 dark:shadow-none dark:hover:shadow-md"
     >

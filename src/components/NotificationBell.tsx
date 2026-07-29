@@ -76,7 +76,7 @@ const NotificationBell = () => {
           <ul className="divide-y divide-gray-200 dark:divide-gray-700 max-h-60 overflow-auto">
             {notifications.length > 0 ? (
               notifications.map((notification) => (
-                <li key={notification.id} className={`p-3 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ${notification.isRead ? "text-gray-500" : "font-bold text-gray-900 dark:text-white"}`}>
+                <li key={notification._id} className={`p-3 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ${notification.isRead ? "text-gray-500" : "font-bold text-gray-900 dark:text-white"}`}>
                   {notification.message}
                 </li>
               ))

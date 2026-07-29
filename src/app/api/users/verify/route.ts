@@ -28,6 +28,7 @@ export async function POST(request: Request) {
     }
 
     const user = await UserModel.findOne({ username });
+    console.log("user", user);
 
     if (!user) {
       return createErrorResponse("User not found", 404);

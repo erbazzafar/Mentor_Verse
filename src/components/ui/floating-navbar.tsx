@@ -29,7 +29,10 @@ export const FloatingNav = ({
 
   const [visible, setVisible] = useState(true);
 
-  const router = usePathname();
+  const pathname = usePathname();
+
+  const isActive = (link: string) =>
+    link === "/" ? pathname === "/" : pathname === link || pathname.startsWith(`${link}/`);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     // Check if current is not undefined and is a number
@@ -76,11 +79,15 @@ export const FloatingNav = ({
             key={`link=${idx}`}
             href={navItem.link}
             className={cn(
-              "relative flex items-center space-x-1 text-neutral-600 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300"
+              "relative flex items-center space-x-1 text-neutral-600 hover:text-neutral-500 dark:text-neutral-50 dark:hover:text-neutral-300",
+              isActive(navItem.link) && "text-black dark:text-white"
             )}
           >
             <span className="block sm:hidden">{navItem.icon}</span>
             <span className="hidden text-sm sm:block">{navItem.name}</span>
+            {isActive(navItem.link) && (
+              <span className="absolute inset-x-0 -bottom-1 mx-auto h-px w-full bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+            )}
           </Link>
         ))}
         {status === "authenticated" && session?.user ? (
@@ -98,7 +105,7 @@ export const FloatingNav = ({
           </>
         ) : (
           <>
-            {router !== "/login" && (
+            {pathname !== "/login" && (
               <Link
                 href="/login"
                 className="relative w-28 text-center rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium text-black dark:border-white/[0.2] dark:text-white flex justify-center"
@@ -107,7 +114,7 @@ export const FloatingNav = ({
                 <span className="absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
               </Link>
             )}
-            {router !== "/register" && (
+            {pathname !== "/register" && (
               <Link
                 href="/register"
                 className="relative w-28 text-center rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium text-black dark:border-white/[0.2] dark:text-white flex justify-center"

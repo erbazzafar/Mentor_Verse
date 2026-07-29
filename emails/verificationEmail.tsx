@@ -66,7 +66,7 @@ export default function VerificationEmail({ username, otp }: VerificationEmailPr
         </Row>
         <Row>
           <Button
-            href={`${baseUrl}/verify/${username}`}
+            href={`${baseUrl}/verify/${encodeURIComponent(username)}`}
             style={{
               backgroundColor: '#4CAF50',
               color: '#fff',
