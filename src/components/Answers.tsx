@@ -64,7 +64,15 @@ const Answers = ({
       };
 
       setNewAnswer("");
-      setAnswers([newAnswerData, ...answers]);
+
+      // Keep AI-generated answers pinned above newly posted ones
+      const firstNonAiIndex = answers.findIndex((a) => !a.isAiGenerated);
+      const insertAt = firstNonAiIndex === -1 ? answers.length : firstNonAiIndex;
+      setAnswers([
+        ...answers.slice(0, insertAt),
+        newAnswerData,
+        ...answers.slice(insertAt),
+      ]);
 
       toast({
         title: "Answer Posted",
