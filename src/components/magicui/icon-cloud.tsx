@@ -74,7 +74,12 @@ export function IconCloud({
   imageArray,
 }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null);
+  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (iconSlugs.length > 0) {
@@ -90,6 +95,10 @@ export function IconCloud({
       renderCustomIcon(icon, theme || "light"),
     );
   }, [data, theme]);
+
+  // `Cloud` manipulates the DOM directly and `theme` is only known client-side,
+  // so it can't be rendered during SSR without a client/server markup mismatch.
+  if (!mounted) return null;
 
   return (
     // @ts-ignore
